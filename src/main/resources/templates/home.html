@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football League Management</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/fonts/themify-icons/themify-icons.css}">
+</head>
+<body>
+<div class="main">
+	<div th:insert="header :: header"></div>
+    <div class="home-content">
+        <div class="user-welcome">
+            <h2>Xin chào <span sec:authentication="principal.username"></span></h2>
+        </div>
+        <div class="home-info">
+            <div class="title">
+                <h4>Thông tin chung giải đấu</h4>
+            </div>
+            <div class="league-name">
+                <h2>Tên giải đấu</h2>
+                <h3>V League</h3>
+            </div>
+            <div class="team-count">
+                <h3>Số lượng đội tham gia: <span th:text="${teamCount}"></span></h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer"></div>
+</div>
+</body>
+</html>

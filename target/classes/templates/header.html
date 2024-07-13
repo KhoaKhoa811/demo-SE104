@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football League Management</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/fonts/themify-icons/themify-icons.css}">
+	
+</head>
+<body>
+<div class="main">
+
+	<header th:fragment="header">
+		<div class="header">
+		    <!-- Begin: Nav -->
+		    <ul id="nav">
+		    	<li><a th:href="@{/admin/home}">Home</a></li>
+		        <li><a th:href="@{/admin/accounts}">Quản lý</a></li>
+		        <li><a th:href="@{/admin/teams}">Đội Bóng</a></li>
+		        <li><a th:href="@{/admin/matches}">Trận đấu</a></li>
+		        <li><a th:href="@{/admin/search-players}">Tra cứu</a></li>
+		        <li><a th:href="@{/admin/chart}">Bảng xếp hạng</a></li>
+		        <li><a th:href="@{/admin/regulations}">Quy định</a></li>
+		    </ul>
+		    <!-- End: Nav -->
+		
+		    <!-- Begin: Search button -->
+		    <div class="user-info">
+		        <form action="#" th:action="@{/logout}" method="POST" >
+				
+				<input type="submit" value="logout" class="logout"/>
+				
+				</form>
+		    </div>
+		    <!-- End: Search button -->
+		    
+		    <!-- Add a logout button -->
+			
+		</div>
+	</header>
+</div>
+</body>

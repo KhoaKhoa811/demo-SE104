@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football League Management</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/fonts/themify-icons/themify-icons.css}">
+</head>
+<body>
+<div class="main">
+
+    <div th:insert="header :: header"></div>
+
+
+    <div class="content">
+        <div class="nav-title">
+            <h2>Quản lý đội bóng</h2>
+        </div>
+
+        <div class="info">
+            <div class="title">
+                <h2>Danh sách đội bóng tham gia</h2>
+            </div>
+
+            <a class="button-create js-exchange">
+                Thêm thông tin đội bóng
+            </a>
+            
+            <hr>
+            
+            <div th:if="${error != null}">
+                <div class="alert-content">
+                    <span th:text="${error}"></span>
+                </div>
+            </div>
+
+            <table class="table">
+                <thead class="table-head">
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên đội bóng</th>
+                        <th>Sân nhà</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                
+                <tbody class="table-body">
+                    <tr th:each="tempTeam, tempTeamStat : ${teams}">
+                        <td th:text="${tempTeamStat.index + 1 + teams.number * teams.size}"></td>
+                        <td>
+			                <a class="link-team-name" th:href="@{/admin/players(teamId=${tempTeam.id})}" th:text="${tempTeam.name}"></a>
+            			</td>
+                        <td th:text="${tempTeam.homeGround}"/>
+                        <td>
+                            <a class="button-update js-exchange" th:attr="data-id=${tempTeam.id}, data-name=${tempTeam.name}, data-homeground=${tempTeam.homeGround}">
+                                Update
+                            </a>
+                            
+                            <a th:href="@{/admin/teams/delete(teamId=${tempTeam.id})}"
+								class="button-delete"
+								onclick="if (!(confirm('Are you sure you want to delete this team?'))) return false">
+								Delete
+							</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="pagination">
+			    <a th:href="@{'/admin/teams?page=' + ${teams.number - 1}}" th:if="${teams.hasPrevious()}">&laquo;</a>
+			    <a th:each="i : ${#numbers.sequence(0, teams.totalPages - 1)}" 
+			       th:href="@{'/admin/teams?page=' + ${i}}"
+			       th:classappend="${i == teams.number} ? ' active' : ''">
+			        <span th:text="${i + 1}"></span>
+			    </a>
+			    <a th:href="@{'/admin/teams?page=' + ${teams.number + 1}}" th:if="${teams.hasNext()}">&raquo;</a>
+			</div>
+        </div>
+    </div>
+
+    <div class="modal js-modal">
+        <div class="modal-container js-modal-container">
+            <div class="modal-close js-modal-close">
+                <i class="ti-close"></i>
+            </div>
+            
+            <form th:action="@{/admin/teams}" th:object="${team}" method="post" onsubmit="return validateForm()">
+
+	            <header class="modal-header">
+	                Lưu đội bóng
+	            </header>
+	            
+	            <input type="hidden" th:field="*{id}" />
+            
+               <div class="modal-body">
+                   <label for="name" class="modal-label">
+                       Tên đội bóng
+                   </label>
+                   <input id="name" type="text" th:field="*{name}" class="modal-input">
+                   <span class="error-message" id="name-error"></span>
+                   
+                   <div class="blank"></div>
+
+                   <label for="homeground" class="modal-label">
+                       Sân nhà
+                   </label>
+                   <input id="homeground" type="text" th:field="*{homeGround}" class="modal-input">
+                   <span class="error-message" id="homeground-error"></span>
+                   
+                   <div class="blank"></div>
+
+                   <button type="submit" id="buy-tickets">
+                       Thêm đội bóng
+                   </button>
+               </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="footer"></div>
+</div>
+
+<script>
+    const addBtns = document.querySelectorAll('.js-exchange')
+    const modal = document.querySelector('.js-modal')
+    const modalContainer = document.querySelector('.js-modal-container')
+    const modalClose = document.querySelector('.js-modal-close')
+
+
+    function showBuyTickets() {
+        modal.classList.add('open')
+        
+        const button = event.target;
+	    const id = button.getAttribute('data-id');
+	    const name = button.getAttribute('data-name');
+	    const homeground = button.getAttribute('data-homeground');
+	    
+	    if (id) {
+	        document.querySelector('input[name="id"]').value = id;
+	        document.querySelector('input[name="name"]').value = name;
+	        document.querySelector('input[name="homeGround"]').value = homeground;
+	    } else {
+	        document.querySelector('form').reset();
+	    }
+    }
+
+    function hideBuyTickets() {
+        modal.classList.remove('open')
+    }
+
+    for (const addBtn of addBtns) {
+        addBtn.addEventListener('click', showBuyTickets)
+    }
+
+    modalClose.addEventListener('click', hideBuyTickets)
+
+    modal.addEventListener('click', hideBuyTickets)
+
+    modalContainer.addEventListener('click', function (event) {
+        event.stopPropagation()
+    })
+    
+    function validateForm() {
+	    let isValid = true;
+	
+	    // Clear previous errors
+	    document.getElementById('name-error').innerText = '';
+	    document.getElementById('homeground-error').innerText = '';
+	
+	    // Validate username
+	    const name = document.getElementById('name').value;
+	    if (name.trim() === '') {
+	        document.getElementById('name-error').innerText = 'Team name is required';
+	        isValid = false;
+	    }
+	
+	    // Validate password
+	    const homeground = document.getElementById('homeground').value;
+	    if (homeground.trim() === '') {
+	        document.getElementById('homeground-error').innerText = 'Homeground is required';
+	        isValid = false;
+	    }
+
+    	return isValid;
+	}
+</script>
+</body>
+</html>

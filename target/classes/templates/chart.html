@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football League Management</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/fonts/themify-icons/themify-icons.css}">
+</head>
+<body>
+<div class="main">
+
+    <div th:insert="header :: header"></div>
+
+    <div class="content">
+        <div class="nav-title">
+            <h2>Bảng xếp hạng</h2>
+        </div>
+
+        <div class="info">
+            <div class="title">
+                <h2>Danh sách xếp hạng</h2>
+            </div>
+            
+            <a class="button-create" th:href="@{/admin/chart/update}">
+                Cập nhật bảng xếp hạng
+            </a>
+            
+            <hr>
+
+            <table class="table">
+                <thead class="table-head">
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên đội</th>
+                        <th>Thắng</th>
+                        <th>Hòa</th>
+                        <th>Thua</th>
+                        <th>Điểm</th>
+                        <th>Hạng</th>
+                    </tr>
+                </thead>
+                
+                <tbody class="table-body">
+                    <tr th:each="tempChart, tempChartStat : ${charts}">
+                        <td th:text="${tempChartStat.index + 1 + charts.number * charts.size}"></td>
+                        <td th:text="${tempChart.teamName}"/>
+                        <td th:text="${tempChart.win}"/>
+                        <td th:text="${tempChart.draw}"/>
+                        <td th:text="${tempChart.loss}"/>
+                        <td th:text="${tempChart.goalDifference}"/>
+                        <td th:text="${tempChart.rank}"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="pagination">
+			    <a th:href="@{'/admin/chart?page=' + ${charts.number - 1}}" th:if="${charts.hasPrevious()}">&laquo;</a>
+			    <a th:each="i : ${#numbers.sequence(0, charts.totalPages - 1)}" 
+			       th:href="@{'/admin/chart?page=' + ${i}}"
+			       th:classappend="${i == charts.number} ? ' active' : ''">
+			        <span th:text="${i + 1}"></span>
+			    </a>
+			    <a th:href="@{'/admin/chart?page=' + ${charts.number + 1}}" th:if="${charts.hasNext()}">&raquo;</a>
+			</div>
+        </div>
+    </div>
+
+    <div class="footer"></div>
+</div>
+
+<script>
+    const addBtns = document.querySelectorAll('.js-exchange')
+    const modal = document.querySelector('.js-modal')
+    const modalContainer = document.querySelector('.js-modal-container')
+    const modalClose = document.querySelector('.js-modal-close')
+
+
+    function showBuyTickets() {
+        modal.classList.add('open')
+    }
+
+    function hideBuyTickets() {
+        modal.classList.remove('open')
+    }
+
+    for (const addBtn of addBtns) {
+        addBtn.addEventListener('click', showBuyTickets)
+    }
+
+    modalClose.addEventListener('click', hideBuyTickets)
+
+    modal.addEventListener('click', hideBuyTickets)
+
+    modalContainer.addEventListener('click', function (event) {
+        event.stopPropagation()
+    })
+</script>
+</body>
+</html>

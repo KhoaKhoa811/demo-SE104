@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football League Management</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/fonts/themify-icons/themify-icons.css}">
+</head>
+<body>
+<div class="main">
+
+    <div th:insert="header :: header"></div>
+
+
+    <div class="content player-content">
+        <div class="nav-title">
+            <h2>Quản lý cầu thủ</h2>
+        </div>
+
+        <div class="info player">
+            <div class="title">
+                <h2>Danh sách cầu thủ</h2>
+            </div>
+
+            <a class="button-create js-exchange">
+                Thêm thông tin cầu thủ
+            </a>
+            
+            <hr>
+
+            <div class="team-name">
+                <h3>Tên đội: <span th:text="${team.name}"></span></h3>
+            </div>
+
+            <div class="team-stadium">
+                <h3>Sân nhà: <span th:text="${team.homeGround}"></span></h3>
+            </div>
+
+            <hr>
+            
+            <div th:if="${error != null}">
+                <div class="alert-content">
+                    <span th:text="${error}"></span>
+                </div>
+            </div>
+
+            <table class="table">
+                <thead class="table-head">
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên cầu thủ</th>
+                        <th>Ngày sinh</th>
+                        <th>Loại cầu thủ</th>
+                        <th>Vị trí</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                
+                <tbody class="table-body">
+                    <tr th:each="tempPlayer, tempPlayerStat : ${players}">
+                    	<td th:text="${tempPlayerStat.index + 1 + players.number * players.size}"></td>
+                        <td th:text="${tempPlayer.name}"/>
+                        <td th:text="${tempPlayer.birthday}"/>
+                        <td th:text="${tempPlayer.playerType}"/>
+                        <td th:text="${tempPlayer.position}"/>
+                        <td>
+                            <a class="button-update js-exchange" th:attr="data-id=${tempPlayer.id}, data-name=${tempPlayer.name}, data-birthday=${tempPlayer.birthday}, data-playertype=${tempPlayer.playerType}, data-position=${tempPlayer.position}">
+                                Update
+                            </a>
+                            
+                            <a th:href="@{/admin/players/delete(playerId=${tempPlayer.id}, teamId=${team.id})}"
+								class="button-delete"
+								onclick="if (!(confirm('Are you sure you want to delete this player?'))) return false">
+								Delete
+							</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="pagination">
+			    <a th:href="@{'/admin/players?page=' + ${players.number - 1} +'&teamId=' + ${teamId}}" th:if="${players.hasPrevious()}">&laquo;</a>
+			    <a th:each="i : ${#numbers.sequence(0, players.totalPages - 1)}" 
+			       th:href="@{'/admin/players?page=' + ${i} + '&teamId=' + ${teamId}}"
+			       th:classappend="${i == players.number} ? ' active' : ''">
+			        <span th:text="${i + 1}"></span>
+			    </a>
+			    <a th:href="@{'/admin/players?page=' + ${players.number + 1} +'&teamId=' + ${teamId}}" th:if="${players.hasNext()}">&raquo;</a>
+			</div>
+        </div>
+    </div>
+
+    <div class="modal js-modal">
+        <div class="modal-container js-modal-container">
+            <div class="modal-close js-modal-close">
+                <i class="ti-close"></i>
+            </div>
+            
+            <form th:action="@{/admin/players(teamId=${team.id})}" th:object="${player}" method="post" onsubmit="return validateForm()">
+
+	            <header class="modal-header">
+	                Lưu cầu thủ
+	            </header>
+	            
+	            <input type="hidden" th:field="*{id}" />
+            
+                <div class="modal-body">
+                    <label for="name" class="modal-label">
+                        Tên cầu thủ
+                    </label>
+                    <input id="name" type="text" th:field="*{name}" class="modal-input">
+                    <span class="error-message" id="name-error"></span>
+                    
+                    <div class="blank"></div>
+
+                    <label for="birthday" class="modal-label">
+                        Ngày sinh (dd/mm/yyyy)
+                    </label>
+                    <input id="birthday" type="date" th:field="*{birthday}" class="modal-input">
+                    <span class="error-message" id="birthday-error"></span>
+                    
+                    <div class="blank"></div>
+
+                    <label for="player-type" class="modal-label">
+                        Loại cầu thủ
+                    </label>
+                    <select id="player-type" th:field="*{playerType}" class="modal-input">
+                        <option value="" disabled selected hidden></option>
+                        <option value="1" class="option">Trong nước</option>
+                        <option value="2" class="option">Ngoài nước</option>
+                    </select>
+                    <span class="error-message" id="player-type-error"></span>
+                    
+                    <div class="blank"></div>
+
+                    <label for="player-position" class="modal-label">
+                        Vị trí
+                    </label>
+                    <select id="player-position" th:field="*{position}" class="modal-input">
+                        <option value="" disabled selected hidden></option>
+                        <option value="Thủ môn" class="option">Thủ môn</option>
+                        <option value="Hậu vệ" class="option">Hậu vệ</option>
+                        <option value="Tiền vệ" class="option">Tiền vệ</option>
+                        <option value="Tiền đạo" class="option">Tiền đạo</option>
+                    </select>
+                    <span class="error-message" id="player-position-error"></span>
+                    
+                    <div class="blank"></div>
+                    
+                    <button type="submit" id="buy-tickets">
+                        Lưu cầu thủ
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="footer"></div>
+</div>
+
+<script>
+    const addBtns = document.querySelectorAll('.js-exchange')
+    const modal = document.querySelector('.js-modal')
+    const modalContainer = document.querySelector('.js-modal-container')
+    const modalClose = document.querySelector('.js-modal-close')
+
+
+    function showBuyTickets() {
+        modal.classList.add('open')
+        
+        const button = event.target;
+	    const id = button.getAttribute('data-id');
+	    const name = button.getAttribute('data-name');
+	    const birthday = button.getAttribute('data-birthday');
+	    const playertype = button.getAttribute('data-playertype');
+	    const position = button.getAttribute('data-position');
+	    
+	    if (id) {
+	        document.querySelector('input[name="id"]').value = id;
+	        document.querySelector('input[name="name"]').value = name;
+	        document.querySelector('input[name="birthday"]').value = birthday;
+	        document.querySelector('input[name="playerType"]').value = playertype;
+	        const playerTypeSelect = document.getElementById('player-type');
+	        const playerTypeOption = playerTypeSelect.querySelector(`option[value="${playerType}"]`);
+	        if (playerTypeOption) {
+	        	playerTypeOption.selected = true;
+	        }
+	        const positionSelect = document.getElementById('player-position');
+	        if (positionSelect) {
+	            positionSelect.value = position;
+	        }
+	    } else {
+	        document.querySelector('form').reset();
+	    }
+    }
+
+    function hideBuyTickets() {
+        modal.classList.remove('open')
+    }
+
+    for (const addBtn of addBtns) {
+        addBtn.addEventListener('click', showBuyTickets)
+    }
+
+    modalClose.addEventListener('click', hideBuyTickets)
+
+    modal.addEventListener('click', hideBuyTickets)
+
+    modalContainer.addEventListener('click', function (event) {
+        event.stopPropagation()
+    })
+    
+    function validateForm() {
+	    let isValid = true;
+	
+	    // Clear previous errors
+	    document.getElementById('name-error').innerText = '';
+	    document.getElementById('birthday-error').innerText = '';
+	    document.getElementById('player-type-error').innerText = '';
+	    document.getElementById('player-position-error').innerText = '';
+	
+	    // Validate username
+	    const name = document.getElementById('name').value;
+	    if (name.trim() === '') {
+	        document.getElementById('name-error').innerText = 'Player name is required';
+	        isValid = false;
+	    }
+	    
+	    const birthday = document.getElementById('birthday').value;
+	    const birthdayPattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
+        if (birthday.trim() === '') {
+            document.getElementById('birthday-error').innerText = 'Birthday is required';
+            isValid = false;
+        } else if (!birthdayPattern.test(birthday)) {
+            document.getElementById('birthday-error').innerText = 'Invalid birthday format (dd/mm/yyyy)';
+            isValid = false;
+        }
+	    
+	    const playerType = document.getElementById('player-type').value;
+	    if (playerType.trim() === '') {
+	        document.getElementById('player-type-error').innerText = 'Player type is required';
+	        isValid = false;
+	    }
+	
+	    // Validate password
+	    const playerPosition = document.getElementById('player-position').value;
+	    if (playerPosition.trim() === '') {
+	        document.getElementById('player-position-error').innerText = 'Player position is required';
+	        isValid = false;
+	    }
+
+    	return isValid;
+	}
+</script>
+</body>
+</html>

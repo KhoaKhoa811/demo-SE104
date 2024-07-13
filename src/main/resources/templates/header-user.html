@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football League Management</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/fonts/themify-icons/themify-icons.css}">
+</head>
+<body>
+<div class="main">
+
+	<header class="site-navbar py-4" role="banner" th:fragment="header-user">
+
+      <div class="container">
+        <div class="d-flex align-items-center">
+          <div class="site-logo">
+            <a th:href="@{/}">
+              <img src="images/logo.png" alt="Logo" style="width: 100px; height: auto;">
+            </a>
+          </div>
+          <div class="ml-auto">
+            <nav class="site-navigation position-relative text-right" role="navigation">
+              <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+                <li><a th:href="@{/}" class="nav-link">Trang chủ</a></li>
+                <li><a th:href="@{/matches}" class="nav-link">Trận đấu</a></li>
+                <li><a th:href="@{/userPlayersSearch}" class="nav-link">Cầu thủ</a></li>
+                <li><a th:href="@{/admin/home}" target="_blank" class="nav-link">Đăng nhập</a></li>
+              </ul>
+            </nav>
+
+            <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right text-white"><span
+                class="icon-menu h3 text-white"></span></a>
+          </div>
+        </div>
+      </div>
+
+    </header>
+</div>
+</body>

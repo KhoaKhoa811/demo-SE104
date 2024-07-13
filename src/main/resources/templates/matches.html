@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Football League Management</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" th:href="@{fonts/icomoon/style.css}">
+
+  <link rel="stylesheet" th:href="@{css/bootstrap/bootstrap.css}">
+  <link rel="stylesheet" th:href="@{css/jquery-ui.css}">
+  <link rel="stylesheet" th:href="@{css/owl.carousel.min.css}">
+  <link rel="stylesheet" th:href="@{css/owl.theme.default.min.css}">
+  <link rel="stylesheet" th:href="@{css/owl.theme.default.min.css}">
+
+  <link rel="stylesheet" th:href="@{css/jquery.fancybox.min.css}">
+
+  <link rel="stylesheet" th:href="@{css/bootstrap-datepicker.css}">
+
+  <link rel="stylesheet" th:href="@{fonts/flaticon/font/flaticon.css}">
+
+  <link rel="stylesheet" th:href="@{css/aos.css}">
+
+  <link rel="stylesheet" th:href="@{css/style2.css}">
+
+
+
+</head>
+
+<body>
+
+  <div class="site-wrap">
+
+    <div class="site-mobile-menu site-navbar-target">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close">
+          <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div>
+
+
+    <div th:insert="header-user :: header"></div>
+
+    <div class="hero overlay" style="background-image: url('images/bg_3.jpg');">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-5 mx-auto text-center">
+            <h1 class="text-white">Trận Đấu</h1>
+            <p>Giải Bóng đá Vô địch Quốc gia Việt Nam</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+    
+    <div class="container">
+      
+
+      <div class="row">
+        <div class="col-lg-12">
+          
+          <div class="d-flex team-vs" th:if="${nearestPastMatch != null}">
+            <span class="score" th:text="${nearestPastMatch.team1Goal} + ' - ' + ${nearestPastMatch.team2Goal}"></span>
+            <div class="team-1 w-50">
+              <div class="team-details w-100 text-center">
+                <img src="images/logo_1.png" alt="Image" class="img-fluid">
+                <h3><span th:text="${nearestPastMatch.team1Name}"></span></h3>
+                <ul class="list-unstyled" th:if="${matchReport != null}">
+		                <li th:each="report : ${matchReport}">
+                        <span th:if="${report.team == nearestPastMatch.team1Name}">
+                            <span th:if="${report.goalTypeId == '1'}" 
+                                  th:text="${report.getPlayerName()} + '  ' + ${#strings.substring(report.getTime(), 0, 2)} + '\''"></span>
+                            <span th:if="${report.goalTypeId == '2'}" 
+                                  th:text="${report.getPlayerName()} + '  ' + ${#strings.substring(report.getTime(), 0, 2)} + '\' (P)'"></span>
+                        </span>
+                        <span th:if="${report.team == nearestPastMatch.team2Name && report.goalTypeId == '3'}" 
+                              th:text="${report.getPlayerName()} + '  ' + ${#strings.substring(report.getTime(), 0, 2)} + '\' (OG)'"></span>
+                    </li>
+		            </ul>
+              </div>
+            </div>
+            <div class="team-2 w-50">
+              <div class="team-details w-100 text-center">
+                <img src="images/logo_2.png" alt="Image" class="img-fluid">
+                <h3><span th:text="${nearestPastMatch.team2Name}"></span></h3>
+                <ul class="list-unstyled" th:if="${matchReport != null}">
+		                <li th:each="report : ${matchReport}">
+                        <span th:if="${report.team == nearestPastMatch.team2Name}">
+                            <span th:if="${report.goalTypeId == '1'}" 
+                                  th:text="${report.getPlayerName()} + '  ' + ${#strings.substring(report.getTime(), 0, 2)} + '\''"></span>
+                            <span th:if="${report.goalTypeId == '2'}" 
+                                  th:text="${report.getPlayerName()} + '  ' + ${#strings.substring(report.getTime(), 0, 2)} + '\' (P)'"></span>
+                        </span>
+                        <span th:if="${report.team == nearestPastMatch.team1Name && report.goalTypeId == '3'}" 
+                              th:text="${report.getPlayerName()} + '  ' + ${#strings.substring(report.getTime(), 0, 2)} + '\' (OG)'"></span>
+                    </li>
+		            </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+
+    
+    <div class="site-section bg-dark">
+      <div class="container">
+        
+        <div class="row mb-5" th:if="${nearestFutureMatch != null}">
+          <div class="col-lg-12">
+            <div class="widget-next-match">
+              <div class="widget-title">
+                <h3>Next Match</h3>
+              </div>
+              <div class="widget-body mb-3">
+                <div class="widget-vs">
+                  <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
+                    <div class="team-1 text-center">
+                      <img src="images/logo_1.png" alt="Image">
+                      <h3><span th:text="${nearestFutureMatch.team1Name}"></span></h3>
+                    </div>
+                    <div>
+                      <span class="vs"><span>VS</span></span>
+                    </div>
+                    <div class="team-2 text-center">
+                      <img src="images/logo_2.png" alt="Image">
+                      <h3><span th:text="${nearestFutureMatch.team2Name}"></span></h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="text-center widget-vs-contents mb-4">
+                <h4>V-League</h4>
+                <p class="mb-5">
+                  <span class="d-block" th:text="${#strings.substring(nearestFutureMatch.dateTime, 0, 16)}"></span>
+                  <strong class="text-primary" th:text="${nearestFutureMatch.homeGround}"></strong>
+                </p>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" th:if="${upcomingMatches != null}">
+          <div class="col-12 title-section">
+            <h2 class="heading">Upcoming Match</h2>
+          </div>
+          
+          <div class="col-lg-6 mb-4" th:each="tempMatch : ${upcomingMatches}">
+            <div class="bg-light p-4 rounded">
+              <div class="widget-body">
+                  <div class="widget-vs">
+                    <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
+                      <div class="team-1 text-center">
+                        <img src="images/logo_3.png" alt="Image">
+                        <h3><span th:text="${tempMatch.team1Name}"></span></h3>
+                      </div>
+                      <div>
+                        <span class="vs"><span>VS</span></span>
+                      </div>
+                      <div class="team-2 text-center">
+                        <img src="images/logo_4.png" alt="Image">
+                        <h3><span th:text="${tempMatch.team2Name}"></span></h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="text-center widget-vs-contents mb-4">
+                  <h4>V-league</h4>
+                  <p class="mb-5">
+                    <span class="d-block" th:text="${#strings.substring(tempMatch.dateTime, 0, 16)}"></span>
+                    <strong class="text-primary" th:text="${tempMatch.homeGround}"></strong>
+                  </p>
+
+                </div>
+              
+            </div>
+          </div>
+
+          
+          
+        </div>
+      </div>
+    </div> <!-- .site-section -->
+  </div>
+  <!-- .site-wrap -->
+
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="js/jquery-ui.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.stellar.min.js"></script>
+  <script src="js/jquery.countdown.min.js"></script>
+  <script src="js/bootstrap-datepicker.min.js"></script>
+  <script src="js/jquery.easing.1.3.js"></script>
+  <script src="js/aos.js"></script>
+  <script src="js/jquery.fancybox.min.js"></script>
+  <script src="js/jquery.sticky.js"></script>
+  <script src="js/jquery.mb.YTPlayer.min.js"></script>
+
+
+  <script src="js/main.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football League Management</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/fonts/themify-icons/themify-icons.css}">
+    
+    <script>
+        function submitSearchForm(event) {
+            if (event.key === 'Enter' || event.type === 'click') {
+                event.preventDefault();
+                document.querySelector('.search-form').submit();
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="main">
+
+    <div th:insert="header :: header"></div>
+
+
+    <div class="content">
+        <div class="nav-title">
+            <h2>Tra cứu cầu thủ</h2>
+        </div>
+
+        <div class="info">
+            <div class="title">
+                <h2>Danh sách cầu thủ</h2>
+            </div>
+            
+            <form th:action="@{/admin/search-players/find}" method="get" class="search-form">
+		        <input type="text" name="query" class="search-field" placeholder="Tìm kiếm tên cầu thủ" onkeydown="submitSearchForm(event)">
+		        <button type="submit" class="search-icon" onclick="submitSearchForm(event)">
+		            <i class="ti-search"></i>
+		        </button>
+		    </form>
+            
+            <hr>
+
+            <table class="table">
+                <thead class="table-head">
+                    <tr>
+                        <th>STT</th>
+                        <th>Cầu thủ</th>
+                        <th>Đội</th>
+                        <th>Vị trí</th>
+                        <th>Loại cầu thủ</th>
+                        <th>Số bàn thắng</th>
+                    </tr>
+                </thead>
+                
+                <tbody class="table-body">
+                    <tr th:each="tempPlayer, tempPlayerStat : ${players}">
+                        <td th:text="${tempPlayerStat.index + 1 + players.number * players.size}"></td>
+                        <td th:text="${tempPlayer.name}"/>
+                        <td th:text="${tempPlayer.team}"/>
+                        <td th:text="${tempPlayer.position}"/>
+                        <td th:text="${tempPlayer.playerType}"/>
+                        <td th:text="${tempPlayer.goal}"/>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div th:if="${thePage == 'players'}">
+		        <div class="pagination">
+				    <a th:href="@{'/admin/search-players?page=' + ${players.number - 1}}" th:if="${players.hasPrevious()}">&laquo;</a>
+				    <a th:each="i : ${#numbers.sequence(0, players.totalPages - 1)}" 
+				       th:href="@{'/admin/search-players?page=' + ${i}}"
+				       th:classappend="${i == players.number} ? ' active' : ''">
+				        <span th:text="${i + 1}"></span>
+				    </a>
+				    <a th:href="@{'/admin/search-players?page=' + ${players.number + 1}}" th:if="${players.hasNext()}">&raquo;</a>
+				</div>
+		    </div>
+		    
+		    <div th:if="${thePage == 'players_find'}">
+		        <div class="pagination">
+				    <a th:href="@{'/admin/search-players/find?page=' + ${players.number - 1} + '&query=' + ${query}}" th:if="${players.hasPrevious()}">&laquo;</a>
+				    <a th:each="i : ${#numbers.sequence(0, players.totalPages - 1)}" 
+				       th:href="@{'/admin/search-players/find?page=' + ${i} + '&query=' + ${query}}"
+				       th:classappend="${i == players.number} ? ' active' : ''">
+				        <span th:text="${i + 1}"></span>
+				    </a>
+				    <a th:href="@{'/admin/search-players/find?page=' + ${players.number + 1} + '&query=' + ${query}}" th:if="${players.hasNext()}">&raquo;</a>
+				</div>
+		    </div>
+        </div>
+    </div>
+    
+    <div class="footer"></div>
+</div>
+    
+</body>
+</html>

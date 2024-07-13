@@ -1,0 +1,851 @@
+@charset "ISO-8859-1";
+
+/* Reset CSS */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+.clear {
+    clear: both;
+}
+
+body {
+    background-color: #f9fafb;
+}
+
+@keyframes modalFadeIn {
+    from {
+        transform: translateY(-130px);
+    }
+    to {
+        transform: translateY(0px);
+    }
+}
+
+.header {
+    height: 80px;
+    background-color: #254892;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.login-content {
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 200px;
+}
+
+.login-title {
+    margin-top: 150px;
+    padding: 20px;
+    display: block;
+    text-align: center;
+}
+
+.login-title h2 {
+    font-weight: 500;
+    font-size: 24px;
+}
+
+.login-form {
+    width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.form-group {
+    display: block;
+    padding: 16px;
+}
+
+.form-group label {
+    font-weight: 500;
+    font-size: 13px;
+    color: #4a4a4a;
+}
+
+.form-group .username {
+    display: block;
+    width: 100%;
+    padding: 6px 12px;
+    margin-top: 6px;
+    border: 1px solid #bfcbd9;
+    box-shadow: none;
+    font-size: 14px;
+    line-height: 1.4;
+    border-radius: 5px;
+}
+
+.form-group .password {
+    display: block;
+    width: 100%;
+    padding: 6px 12px;
+    margin-top: 6px;
+    border: 1px solid #bfcbd9;
+    box-shadow: none;
+    font-size: 14px;
+    line-height: 1.4;
+    border-radius: 5px;
+}
+
+.login-button .button {
+    width: 320px;
+    padding: 12px;
+    margin: 16px;
+    cursor: pointer;
+    background-color: #254892;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.content, .login-content {
+    flex: 1 0 auto;
+}
+.footer {
+    background: #fff;
+    color: white;
+    text-align: center;
+    padding: 50px;
+    flex-shrink: 0;
+}
+
+.header #nav {
+    display: inline-block;
+}
+
+.header li {
+    display: inline-block;
+}
+
+.header li a {
+    text-decoration: none;
+    line-height: 80px;
+    padding: 0 24px;
+    display: block;
+    color: #fff;
+    font-size: small;
+}
+
+.header li:hover{
+    opacity: 0.6;
+}
+
+.header .user-info:hover {
+    opacity: 0.6;
+}
+
+.header .user-info {
+    float: right;
+    height: 80px;
+    padding: 14px 30px;
+    margin: 15px 30px;
+    cursor: pointer;
+}
+
+.header .user-icon-background {
+    display: inline-block;
+    border: 1px solid #fff;
+    padding: 5px;
+    border-radius: 50%;
+    background-color: #bfcbd9;
+    margin-left: 12px;
+}
+
+.header .user-info span {
+    color: #fff;
+}
+
+.home-content {
+    display: block;
+    width: 100%;
+    height: 900px;
+    margin-top: 150px;
+}
+
+.home-content .user-welcome {
+    display: block;
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.home-content .user-welcome h2 {
+    font-weight: 500;
+}
+
+.home-content .home-info {
+    display: block;
+    width: 1000px;
+    height: 750px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #dce1ef;
+    border-radius: 4px;
+    background-color: #fff;
+    margin-top: 20px;
+    padding: 20px;
+}
+
+.home-content .home-info .title h4{
+    font-weight: 500;
+}
+
+.home-content .home-info .league-name {
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+}
+
+.home-content .home-info .league-name h3{
+    display: block;
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 12px;
+    background-color: #FFCCCC;
+}
+
+.home-content .home-info h2 {
+    font-weight: 600;
+    font-size: 30px;
+}
+
+.home-content .home-info h3 {
+    font-weight: 500;
+    font-size: 25px;
+    margin: 16px;
+}
+
+.home-content .home-info .team-count {
+    text-align: center;
+    padding: 6px;
+    background-color: #CCCCFF;
+    display: block;
+    width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.home-content .home-info .closest-match {
+    text-align: center;
+    padding: 20px;
+}
+
+.content .nav-title {
+    display: block;
+    width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #dce1ef;
+    border-radius: 4px;
+    background-color: #fff;
+    padding: 16px;
+}
+
+.content .nav-title h2 {
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.content {
+    display: block;
+    width: 100%;
+    height: 700px;
+    margin-top: 150px;
+}
+
+.content.player-content {
+    height: 800px;
+}
+
+.content .info {
+    display: block;
+    width: 1100px;
+    height: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #dce1ef;
+    border-radius: 4px;
+    background-color: #fff;
+    margin-top: 20px;
+    padding: 20px;
+}
+
+.content .info.player {
+    height: 700px;
+}
+
+.content .info .title {
+    display: inline-block;
+}
+
+.content .info .title h2{
+    font-weight: 300;
+}
+
+.content .info hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 1px solid #eee;
+}
+
+.content .table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 5px;
+}
+
+.content .table th, .content .table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+}
+
+.content .table .click {
+    cursor: pointer;
+}
+
+.content .table tr:nth-child(even){background-color: #f2f2f2;}
+
+.content .table tr:hover {background-color: #ddd;}
+
+.content .table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #000;
+    color: white;
+}
+
+.content .table .button-update {
+    background-color: #04AA6D;
+    border: none;
+    color: white;
+    padding: 6px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.content .table .button-delete {
+    background-color: red;
+    border: none;
+    color: white;
+    padding: 6px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-left: 12px;
+}
+
+.content .table .button-update:hover {
+    opacity: 0.8;
+}
+
+.content .table .button-delete:hover {
+    opacity: 0.8;
+}
+
+.content .pagination {
+    display: inline-block;
+    margin-top: 32px;
+    float: right;
+    margin-right: 20px;
+}
+
+.content .pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+  
+.content .pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+}
+  
+.content .pagination a:hover:not(.active) {
+    background-color: #ddd;
+    border-radius: 5px;
+}
+
+.content .button-create {
+    float: right;
+    background-color: #04AA6D;
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 20px;
+}
+
+.content .button-create:hover {
+    opacity: 0.8;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.open {
+    display: flex;
+}
+
+.modal .modal-container {
+    background-color: #fff;
+    width: 700px;
+    max-width: calc(100% - 32px);
+    min-height: 200px;
+    position: relative;
+    animation: modalFadeIn ease 0.3s;
+}
+
+.modal .modal-header {
+    background-color: #009688;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    color: #fff;
+}
+
+.modal .modal-heading-icon {
+    margin-right: 16px;
+}
+
+.modal .modal-close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: #fff;
+    padding: 12px;
+    cursor: pointer;
+    opacity: 0.9;
+}
+
+.modal .modal-close:hover {
+    opacity: 1;
+    background-color: red;
+}
+
+.modal .modal-body {
+    padding: 16px;
+}
+
+.modal .modal-label {
+    display: block;
+    font-size: 15px;
+    margin-bottom: 12px;
+}
+
+.modal .modal-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    width: 100%;
+    font-size: 15px;
+}
+
+.modal #buy-tickets {
+    width: 100%;
+    padding: 18px;
+    background-color: #009688;
+    color: #fff;
+    border: none;
+    font-size: 15px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.modal #buy-tickets:hover {
+    opacity: 0.9;
+}
+
+.modal .modal-footer {
+    padding: 16px;
+    text-align: right;
+}
+
+.modal .modal-footer a {
+    color: #2196F3;
+}
+
+.content .team-name {
+    display: inline-block;
+    padding: 12px 24px;
+}
+
+.content .team-name span {
+    color: green;
+}
+
+.content .team-stadium {
+    display: inline-block;
+    margin-left: 200px;
+}
+
+.content .team-stadium span {
+    color: green;
+}
+
+.content .search-icon {
+    font-size: 24px;
+    float: right;
+    border: none;
+    background-color: #fff;
+    cursor: pointer;
+    margin-top: -25px;
+}
+
+.content .search-field {
+    height: 24px;
+    width: 400px;
+    line-height: 28px;
+    float: right;
+    margin-right: 12px;
+    margin-left: 6px;
+    padding: 12px;
+    font-size: 16px;
+    margin-top: -25px;
+}
+
+.content .match-round {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+
+.content .match-round .round-title {
+    display: inline-block;
+}
+
+.content .match-round .round-content {
+    display: inline-block;
+}
+
+.content .match-round .round-content .round {
+    display: block;
+    font-size: 16px;
+    border-radius: 4px;
+    color: green;
+    border: 1px solid #ddd;
+}
+
+.content .match-status {
+    width: 100%;
+    border-collapse: collapse;
+    padding: 20px;
+}
+
+.content .match-status td {
+    padding: 12px 28px;
+}
+
+.content .match-status span {
+    color: green;
+}
+
+.match-status.alter {
+    margin-top: 40px;
+}
+
+.modal .match-status {
+    padding: 12px;
+}
+
+.modal .column {
+    display: block;
+    margin-left: 40px;
+}
+
+.modal .modal-regulation {
+    display: inline-block;
+    width: 50px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    padding: 4px;
+}
+
+.modal .modal-regulation-time {
+	display: inline-block;
+    width: 80px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    padding: 4px;
+}
+
+.home-content .match-info {
+    width: 80%;
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -15px;
+}
+
+.home-content .match-info td {
+    border: 3px solid #ddd;
+    padding: 12px;
+}
+
+.home-content .match-info .time {
+    width: 180px;
+}
+
+.home-content .match-info .team-1 {
+    display: inline-block;
+    padding: 6px 18px;
+    background-color: #E0E0E0;
+    margin-right: 12px;
+}
+
+.home-content .match-info .score {
+    display: inline-block;
+    background-color: gold;
+    padding: 6px 18px;
+}
+
+.home-content .match-info .team-2 {
+    display: inline-block;
+    padding: 6px 18px;
+    background-color: #E0E0E0;
+    margin-left: 12px;
+}
+
+.home-content .match-info .match-content {
+    text-align: center;
+}
+
+.login-form .password-missing {
+    text-decoration: none;
+    color: #0e72c5;
+    font-weight: 200;
+    padding-bottom: 8px;
+    float: right;
+    margin-right: 16px;
+    margin-bottom: 8px;
+    font-size: small;
+}
+
+.login-form .password-missing:hover {
+    text-decoration: underline;
+    color: #4a4a4a;
+    font-weight: 200;
+    padding-bottom: 8px;
+    float: right;
+    margin-right: 16px;
+}
+
+.login-form .alert {
+    color: #691911;
+    background-color: #f4d6d2;
+    border-color: #f0c5c1;
+    display: block;
+    width: 316px;
+    padding: 12px 8px;
+    margin-top: 20px; /* Increase the margin-top for better visibility */
+    margin-left: 16px;
+    margin-right: 16px;
+    box-shadow: none;
+    font-size: 14px;
+    line-height: 1.4;
+    border-radius: 5px;
+}
+
+.login-form .success {
+    color: green;
+    background-color: rgba(162, 244, 155, 0.8);
+    border-color: rgba(162, 244, 155, 0.8);
+    display: block;
+    width: 316px;
+    padding: 12px 8px;
+    margin-top: 20px; /* Increase the margin-top for better visibility */
+    margin-left: 16px;
+    margin-right: 16px;
+    box-shadow: none;
+    font-size: 14px;
+    line-height: 1.4;
+    border-radius: 5px;
+}
+
+.login-form {
+    padding-top: 10px; /* Added padding to the parent container */
+}
+
+.content .link-team-name {
+	text-decoration: none;
+	font-weight: 500;
+}
+
+.content .link-team-name:hover {
+	text-decoration: underline;
+    color: #4a4a4a;
+    font-weight: 500;
+}
+
+.option {
+	padding: 10px;
+}
+
+.match-row {
+	cursor: pointer;
+}
+
+.logout {
+	cursor: pointer;
+	background-color: #254892;
+	border: none;
+	color: #fff;
+	font-size: small;
+}
+
+.alert-content {
+    color: #691911;
+    background-color: #f4d6d2;
+    border-color: #f0c5c1;
+    display: block;
+    width: 1058px;
+    padding: 12px 8px;
+    margin-top: 20px; /* Increase the margin-top for better visibility */
+    margin-left: 0px;
+    margin-right: 0px;
+    box-shadow: none;
+    font-size: 14px;
+    line-height: 1.4;
+    border-radius: 5px;
+    margin-bottom: 12px;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+.blank {
+	display:block;
+	margin-top:6px;
+	padding-top:12px;
+	margin-bottom:6px;
+}
+
+
+.table-user {
+    width: 100%; /* Adjusted to percentage */
+    min-height: 100px; /* Minimum height */
+    justify-content: center;
+    border-collapse: collapse; /* Collapse borders */
+    margin-bottom: 1rem; /* Bottom margin */
+    position: relative; /* Positioning */
+    background-color: #ffffff;
+    border: 1px solid black; /* Add black border */
+}
+
+.table-head-user {
+  background-color: #d20d0d;
+  color: white;
+  border: 1px solid black; /* Add black border */
+}
+
+.table-head-user th {
+  padding: 0.75rem;
+  text-align: left;
+  border: 1px solid black; /* Add black border */
+}
+
+.table-body-user td {
+  padding: 0.75rem;
+  border: 1px solid black; /* Add black border */
+  color: #000;
+}
+
+
+.info input {
+    background: none;
+    background-color: white; 
+    color: black; 
+    border: 1px solid #ccc; 
+    padding: 10px; 
+    font-size: 16px; 
+    border-radius: 5px;
+}
+
+.info button {
+    background: none;
+    background-color: white; 
+    color: black; 
+    border: 1px solid #ccc; 
+    padding: 10px; 
+    font-size: 16px; 
+    border-radius: 5px;
+}
+
+.info .pagination {
+    display: inline-block;
+    margin-top: 32px;
+    float: right;
+    margin-right: 20px;
+}
+
+.info .pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+  
+.info .pagination a.active {
+    background-color: white;
+    color: black;
+    border-radius: 5px;
+}
+  
+.info .pagination a:hover:not(.active) {
+    background-color: #ddd;
+    border-radius: 5px;
+}

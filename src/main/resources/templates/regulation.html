@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football League Management</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/fonts/themify-icons/themify-icons.css}">
+</head>
+<body>
+<div class="main">
+
+    <div th:insert="header :: header"></div>
+
+    <div class="content">
+        <div class="nav-title">
+            <h2>Quản lý quy định</h2>
+        </div>
+
+        <div class="info">
+            <div class="title">
+                <h2>Danh sách các quy định</h2>
+            </div>
+
+            <a class="button-create js-exchange" 
+               th:attr="data-id=${regulation.id}, 
+                        data-minage=${regulation.minAge}, 
+                        data-maxage=${regulation.maxAge}, 
+                        data-minnumber=${regulation.minNumber}, 
+                        data-maxnumber=${regulation.maxNumber},
+                        data-maxforeignnumber=${regulation.maxForeignNumber},
+                        data-winpoint=${regulation.winPoint},
+                        data-drawpoint=${regulation.drawPoint},
+                        data-numberofgoaltype=${regulation.numberOfGoalType},
+                        data-losspoint=${regulation.lossPoint},
+                        data-maxscoretime=${regulation.maxScoreTime},
+                        data-rankingorder=${regulation.rankingOrder}">
+                Chỉnh sửa quy định
+            </a>
+            
+            <hr>
+            
+            <div th:if="${error != null}">
+                <div class="alert-content">
+                    <span th:text="${error}"></span>
+                </div>
+            </div>
+
+            <table class="match-status">
+                <tr>
+                    <td><h3>Tuổi tối thiểu của cầu thủ: <span th:text="${regulation.minAge}"></span></h3></td>
+                    <td><h3>Tuổi tối đa của cầu thủ: <span th:text="${regulation.maxAge}"></span></h3></td>
+                </tr>
+                <tr>
+                    <td><h3>Số lượng cầu thủ tối thiểu của đội: <span th:text="${regulation.minNumber}"></span></h3></td>
+                    <td><h3>Số lượng cầu thủ tối đa của đội: <span th:text="${regulation.maxNumber}"></span></h3></td>
+                </tr>
+                <tr>
+                    <td><h3>Số cầu thủ nước ngoài tối đa: <span th:text="${regulation.maxForeignNumber}"></span></h3></td>
+                </tr>
+            </table>
+
+            <table class="match-status alter">
+                <tr>
+                    <td><h3>Điểm số thắng: <span th:text="${regulation.winPoint}"></span></h3></td>                
+                <tr>
+                    <td><h3>Điểm số hòa: <span th:text="${regulation.drawPoint}"></span></h3></td>
+                    <td><h3>Thời điểm ghi bàn tối đa: <span th:text="${regulation.maxScoreTime}"></span></h3></td>
+                </tr>
+                <tr>
+                    <td><h3>Điểm số thua: <span th:text="${regulation.lossPoint}"></span></h3></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="modal js-modal">
+        <div class="modal-container js-modal-container">
+            <div class="modal-close js-modal-close">
+                <i class="ti-close"></i>
+            </div>
+            
+        	<form th:action="@{/admin/regulations}" th:object="${theRegulation}" method="post" onsubmit="return validateForm()">    
+
+    <header class="modal-header">
+        Cập nhật quy định
+    </header>
+    
+    <input type="hidden" th:field="*{id}" name="id"/>
+
+    <div class="modal-body">
+        <table class="match-status">
+            <tr>
+                <td>
+                    <label for="min-age" class="modal-label">
+                        Tuổi tối thiểu của cầu thủ: 
+                        <input id="min-age" type="text" th:field="*{minAge}" class="modal-regulation" name="minAge"><br>
+                        <span class="error-message" id="min-age-error"></span>
+                    </label>
+                </td>
+                <td class="column">
+                    <label for="max-age" class="modal-label">
+                        Tuổi tối đa của cầu thủ:
+                        <input id="max-age" type="text" th:field="*{maxAge}" class="modal-regulation" name="maxAge"><br>
+                        <span class="error-message" id="max-age-error"></span>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="min-number" class="modal-label">
+                        Số lượng cầu thủ tối thiểu của đội:
+                        <input id="min-number" type="text" th:field="*{minNumber}" class="modal-regulation" name="minNumber"><br>
+                        <span class="error-message" id="min-number-error"></span>
+                    </label>
+                </td>
+                <td class="column">
+                    <label for="max-number" class="modal-label">
+                        Số lượng cầu thủ tối đa của đội:
+                        <input id="max-number" type="text" th:field="*{maxNumber}" class="modal-regulation" name="maxNumber"><br>
+                        <span class="error-message" id="max-number-error"></span>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="max-foreign-number" class="modal-label">
+                        Số cầu thủ nước ngoài tối đa:
+                        <input id="max-foreign-number" type="text" th:field="*{maxForeignNumber}" class="modal-regulation" name="maxForeignNumber"><br>
+                        <span class="error-message" id="max-foreign-number-error"></span>
+                    </label>
+                </td>
+            </tr>
+        </table>
+
+        <table class="match-status alter">
+            <tr>
+                <td>
+                    <label for="win-point" class="modal-label">
+                        Điểm số thắng:
+                        <input id="win-point" type="text" th:field="*{winPoint}" class="modal-regulation" name="winPoint"><br>
+                        <span class="error-message" id="win-point-error"></span>
+                    </label>
+                </td>                
+            <tr>
+                <td>
+                    <label for="draw-point" class="modal-label">
+                        Điểm số hòa:
+                        <input id="draw-point" type="text" th:field="*{drawPoint}" class="modal-regulation" name="drawPoint"><br>
+                        <span class="error-message" id="draw-point-error"></span>
+                    </label>
+                </td>      
+                <td class="column">
+                    <label for="max-score-time" class="modal-label">
+                        Thời điểm ghi bàn tối đa (mm:ss):
+                        <input id="max-score-time" type="text" th:field="*{maxScoreTime}" class="modal-regulation-time" name="maxScoreTime"> <br>
+                        <span class="error-message" id="max-score-time-error"></span>
+                    </label>
+                </td> 
+            </tr>
+            <tr>
+                <td>
+                    <label for="loss-point" class="modal-label">
+                        Điểm số thua:
+                        <input id="loss-point" type="text" th:field="*{lossPoint}" class="modal-regulation" name="lossPoint"><br>
+                        <span class="error-message" id="loss-point-error"></span>
+                    </label>
+                </td>
+            </tr>
+        </table>
+
+        <button type="submit" id="buy-tickets">
+            Lưu quy định
+        </button>
+    </div>
+</form>
+
+        </div>
+    </div>
+
+    <div class="footer"></div>
+</div>
+
+<script>
+    const addBtns = document.querySelectorAll('.js-exchange')
+    const modal = document.querySelector('.js-modal')
+    const modalContainer = document.querySelector('.js-modal-container')
+    const modalClose = document.querySelector('.js-modal-close')
+
+    function showBuyTickets(event) {
+        modal.classList.add('open');
+
+        const button = event.target;
+        const id = button.getAttribute('data-id');
+        const min_age = button.getAttribute('data-minage');
+        const max_age = button.getAttribute('data-maxage');
+        const min_number = button.getAttribute('data-minnumber');
+        const max_number = button.getAttribute('data-maxnumber');
+        const max_foreign_number = button.getAttribute('data-maxforeignnumber');
+        const win_point = button.getAttribute('data-winpoint');
+        const draw_point = button.getAttribute('data-drawpoint');
+        const loss_point = button.getAttribute('data-losspoint');
+        const number_of_goal_type = button.getAttribute('data-numberofgoaltype');
+        const max_score_time = button.getAttribute('data-maxscoretime');
+        const ranking_order = button.getAttribute('data-rankingorder');
+
+        if (id) {
+            document.querySelector('input[name="id"]').value = id;
+            document.querySelector('input[name="minAge"]').value = min_age;
+            document.querySelector('input[name="maxAge"]').value = max_age;
+            document.querySelector('input[name="minNumber"]').value = min_number;
+            document.querySelector('input[name="maxNumber"]').value = max_number;
+            document.querySelector('input[name="maxForeignNumber"]').value = max_foreign_number;
+            document.querySelector('input[name="winPoint"]').value = win_point;
+            document.querySelector('input[name="drawPoint"]').value = draw_point;
+            document.querySelector('input[name="lossPoint"]').value = loss_point;
+            document.querySelector('input[name="numberOfGoalType"]').value = number_of_goal_type;
+            document.querySelector('input[name="maxScoreTime"]').value = max_score_time;
+            document.querySelector('input[name="rankingOrder"]').value = ranking_order;
+        } else {
+            document.querySelector('form').reset();
+        }
+    }
+
+    function hideBuyTickets() {
+        modal.classList.remove('open')
+    }
+
+    for (const addBtn of addBtns) {
+        addBtn.addEventListener('click', showBuyTickets)
+    }
+
+    modalClose.addEventListener('click', hideBuyTickets)
+
+    modal.addEventListener('click', hideBuyTickets)
+
+    modalContainer.addEventListener('click', function (event) {
+        event.stopPropagation()
+    })
+
+    function validateForm() {
+        let isValid = true;
+
+        // Clear previous errors
+        document.querySelectorAll('.error-message').forEach(error => {
+            error.innerText = '';
+        });
+
+        // Helper function to validate number fields
+        function validateNumberField(fieldId, errorId) {
+            const field = document.getElementById(fieldId);
+            if (field.value.trim() === '') {
+                document.getElementById(errorId).innerText = 'This field is required';
+                isValid = false;
+            } else if (isNaN(field.value)) {
+                document.getElementById(errorId).innerText = 'Only numbers are allowed';
+                isValid = false;
+            }
+        }
+
+        // Validate each field
+        validateNumberField('min-age', 'min-age-error');
+        validateNumberField('max-age', 'max-age-error');
+        validateNumberField('min-number', 'min-number-error');
+        validateNumberField('max-number', 'max-number-error');
+        validateNumberField('max-foreign-number', 'max-foreign-number-error');
+        validateNumberField('win-point', 'win-point-error');
+        validateNumberField('draw-point', 'draw-point-error');
+        validateNumberField('loss-point', 'loss-point-error');
+
+        // Validate max score time field
+        const dateTime = document.getElementById('max-score-time').value;
+        const dateTimePattern = /^(0*[0-9]{1,3}|[1-9][0-9]{0,2}):[0-5][0-9]$/;
+        if (dateTime.trim() === '') {
+            document.getElementById('max-score-time-error').innerText = 'Time is required';
+            isValid = false;
+        } else if (!dateTimePattern.test(dateTime)) {
+            document.getElementById('max-score-time-error').innerText = 'Invalid time format (mm:ss)';
+            isValid = false;
+        }
+
+        return isValid;
+    }
+</script>
+</body>
+</html>

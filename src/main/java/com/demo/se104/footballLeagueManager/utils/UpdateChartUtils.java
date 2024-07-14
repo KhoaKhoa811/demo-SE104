@@ -42,7 +42,7 @@ public class UpdateChartUtils {
 	        		chartMap.get(team2Id).setGoalDifference(Integer.toString(Integer.parseInt(chartMap.get(team2Id).getGoalDifference()) + lossPoint));
 	        	} else if (team1Goal < team2Goal) {
 	        		chartMap.get(team2Id).setWin(Integer.toString(Integer.parseInt(chartMap.get(team2Id).getWin())+1));
-	        		chartMap.get(team1Id).setWin(Integer.toString(Integer.parseInt(chartMap.get(team1Id).getLoss())+1));
+	        		chartMap.get(team1Id).setLoss(Integer.toString(Integer.parseInt(chartMap.get(team1Id).getLoss())+1));
 	        		chartMap.get(team1Id).setGoalDifference(Integer.toString(Integer.parseInt(chartMap.get(team1Id).getGoalDifference()) + lossPoint));
 	        		chartMap.get(team2Id).setGoalDifference(Integer.toString(Integer.parseInt(chartMap.get(team2Id).getGoalDifference()) + winPoint));
 	        	} else if (team1Goal == team2Goal) {

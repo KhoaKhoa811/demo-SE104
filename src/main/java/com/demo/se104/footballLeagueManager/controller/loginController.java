@@ -44,10 +44,13 @@ public class loginController {
 			return "password-missing";
 		}
 		
+		String input = admin.getPassword();
+        String output = input.replace("{noop}", "");
+		
 		SimpleMailMessage msg = new SimpleMailMessage();
 		msg.setTo(email);
 		msg.setSubject("Gửi lại tài khoản, mật khẩu");
-		msg.setText("Tài khoản: " + admin.getUserId() + "\n" + "Mật khẩu: " + admin.getPassword());
+		msg.setText("Tài khoản: " + admin.getUserId() + "\n" + "Mật khẩu: " + output);
 		javaMailSender.send(msg);
 		
 		model.addAttribute("success", "Email đã được gửi. Vui lòng kiểm tra email");

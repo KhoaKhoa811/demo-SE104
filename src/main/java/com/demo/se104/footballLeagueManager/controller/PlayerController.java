@@ -13,10 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.demo.se104.footballLeagueManager.dao.MatchRepository;
+import com.demo.se104.footballLeagueManager.entity.MatchEntity;
 import com.demo.se104.footballLeagueManager.model.Admin;
 import com.demo.se104.footballLeagueManager.model.Player;
 import com.demo.se104.footballLeagueManager.model.Regulation;
 import com.demo.se104.footballLeagueManager.model.Team;
+import com.demo.se104.footballLeagueManager.service.MatchService;
 import com.demo.se104.footballLeagueManager.service.PlayerService;
 import com.demo.se104.footballLeagueManager.service.RegulationService;
 import com.demo.se104.footballLeagueManager.service.TeamService;
@@ -29,12 +32,14 @@ public class PlayerController {
 	private PlayerService playerService;
 	private TeamService teamService;
 	private RegulationService regulationService;
+	private MatchRepository matchRepository;
 	
 	@Autowired
-	public PlayerController(PlayerService playerService, TeamService teamService, RegulationService regulationService) {
+	public PlayerController(PlayerService playerService, TeamService teamService, RegulationService regulationService, MatchRepository matchRepository) {
 		this.playerService = playerService;
 		this.teamService = teamService;
 		this.regulationService = regulationService;
+		this.matchRepository = matchRepository;
 	}
 	
 	@GetMapping("/players")
@@ -67,6 +72,26 @@ public class PlayerController {
 	    	Player existingPlayer = playerService.findById(player.getId());
 	    	
 	    	Integer foreignCount = playerService.countByPlayerTypeIdAndTeamId(2, theId);
+	    	
+	    	List<MatchEntity> matches= matchRepository.findByTeamId(theId);
+			
+			if(!matches.isEmpty()) {
+				page = (page < 0) ? 0 : page;
+				
+				Page<Player> thePlayers = playerService.findByTeamId(theId, PageRequest.of(page, 5));
+				
+				Team theTeam = teamService.findById(theId);
+				
+				Player thePlayer = new Player();
+				
+				// add to the spring model
+				model.addAttribute("players", thePlayers);
+				model.addAttribute("player", thePlayer);
+				model.addAttribute("team", theTeam);
+				model.addAttribute("teamId", theId);
+				model.addAttribute("error", "Đội bóng đã được được xếp lịch thi đấu. Vui lòng kiểm tra lại trước khi thay đổi thông tin.");
+				return "player";
+			}
 	    	
 	    	if(existingPlayer.getPlayerTypeId() == 2) {
 	    		foreignCount--;
@@ -119,6 +144,26 @@ public class PlayerController {
 	    } else {
 	    	
 	    	List<Regulation> regulations = regulationService.findAll();
+	    	
+	    	List<MatchEntity> matches= matchRepository.findByTeamId(theId);
+			
+			if(!matches.isEmpty()) {
+				page = (page < 0) ? 0 : page;
+				
+				Page<Player> thePlayers = playerService.findByTeamId(theId, PageRequest.of(page, 5));
+				
+				Team theTeam = teamService.findById(theId);
+				
+				Player thePlayer = new Player();
+				
+				// add to the spring model
+				model.addAttribute("players", thePlayers);
+				model.addAttribute("player", thePlayer);
+				model.addAttribute("team", theTeam);
+				model.addAttribute("teamId", theId);
+				model.addAttribute("error", "Đội bóng đã được được xếp lịch thi đấu. Vui lòng kiểm tra lại trước khi thay đổi thông tin.");
+				return "player";
+			}
 	    	
 	    	if(playerService.countByTeamId(theId) >= regulations.get(0).getMaxNumber()) {
 	    		page = (page < 0) ? 0 : page;
@@ -188,7 +233,27 @@ public class PlayerController {
 	}
 	
 	@GetMapping("/players/delete")
-	public String delete(@RequestParam("playerId") int theId, @RequestParam("teamId") int teamId) {
+	public String delete(@RequestParam(defaultValue = "0") int page, @RequestParam("playerId") int theId, @RequestParam("teamId") int teamId, Model model) {
+		
+		List<MatchEntity> matches= matchRepository.findByTeamId(teamId);
+		
+		if(!matches.isEmpty()) {
+			page = (page < 0) ? 0 : page;
+			
+			Page<Player> thePlayers = playerService.findByTeamId(teamId, PageRequest.of(page, 5));
+			
+			Team theTeam = teamService.findById(teamId);
+			
+			Player thePlayer = new Player();
+			
+			// add to the spring model
+			model.addAttribute("players", thePlayers);
+			model.addAttribute("player", thePlayer);
+			model.addAttribute("team", theTeam);
+			model.addAttribute("teamId", teamId);
+			model.addAttribute("error", "Đội bóng đã được được xếp lịch thi đấu. Vui lòng kiểm tra lại trước khi thay đổi thông tin.");
+			return "player";
+		}
 		
 		playerService.deleteById(theId);
 		

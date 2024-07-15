@@ -65,6 +65,31 @@ public class RegulationController {
 	    if (regulation.getId() != null) {
 	    	Regulation existingRegulation = regulationService.findById(regulation.getId());
 	    	
+	    	if(regulation.getMaxAge() < regulation.getMinAge()) {
+	    		
+	    		List<Regulation> regulations = regulationService.findAll();
+	    		
+	    		Regulation theRegulation = new Regulation();
+	    		
+	    		// add to the spring model
+	    		model.addAttribute("regulation", regulations.get(0));
+	    		model.addAttribute("theRegulation", theRegulation);
+	    		model.addAttribute("error", "Quy định tuổi không hợp lệ. Vui lòng kiểm tra lại.");
+	    		return "regulation";
+	    	}
+	    	
+	    	if(regulation.getMaxNumber() < regulation.getMinNumber()) {
+	    		List<Regulation> regulations = regulationService.findAll();
+	    		
+	    		Regulation theRegulation = new Regulation();
+	    		
+	    		// add to the spring model
+	    		model.addAttribute("regulation", regulations.get(0));
+	    		model.addAttribute("theRegulation", theRegulation);
+	    		model.addAttribute("error", "Quy định số lượng cầu thủ không hợp lệ. Vui lòng kiểm tra lại.");
+	    		return "regulation";
+	    	}
+	    	
 	    	if(regulation.getWinPoint() <= regulation.getDrawPoint() ||
 	    		regulation.getWinPoint() <= regulation.getLossPoint() ||
 	    		regulation.getDrawPoint() <= regulation.getLossPoint()) {

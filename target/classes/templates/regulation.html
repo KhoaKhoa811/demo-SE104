@@ -255,6 +255,9 @@
             } else if (isNaN(field.value)) {
                 document.getElementById(errorId).innerText = 'Only numbers are allowed';
                 isValid = false;
+            } else if (Number(field.value) < 0) {
+                document.getElementById(errorId).innerText = 'Negative numbers are not allowed';
+                isValid = false;
             }
         }
 
